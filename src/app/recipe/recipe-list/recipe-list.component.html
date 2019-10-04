@@ -1,0 +1,34 @@
+<mat-accordion multi="true" *ngIf="recipeList.length > 0">
+  <mat-expansion-panel *ngFor="let recipe of recipeList">
+    <mat-expansion-panel-header>
+      <h3 style="color: mediumslateblue">{{recipe.rName}}</h3>
+    </mat-expansion-panel-header>
+    <mat-expansion-panel *ngFor="let step of recipe.rSteps; let i = index" [expanded]="true">
+          <mat-expansion-panel-header>
+              <strong>Step {{i+1}}:&nbsp;</strong>{{step.title}}
+          </mat-expansion-panel-header>
+              <p><strong>Description: </strong>{{step.description}}</p>
+              <div class="recipe-image">
+                  <img [src]="step.imagePath" [alt]="step.title">
+              </div>
+              <p><strong>Click on link to watch video: </strong>
+                 <a [href]="step.videoLink" target="_blank">{{step.videoLink}}</a>
+              </p>
+              <div>
+                <p><strong>Time Required: </strong>{{step.timer}} min</p>
+                <button mat-stroked-button style="background-color: lightgrey" type="button" (click)="startTimer(step.timer)">Start Timer</button>
+                <span>{{initialValue}}</span>
+              </div>
+              <mat-action-row>
+                <a mat-button color="primary" [routerLink]="['/step/edit', step._id]">Edit</a>
+                <button mat-button (click)="onDeleteStep(step._id)" color="warn">Delete</button>
+              </mat-action-row>
+    </mat-expansion-panel>
+    <mat-action-row>
+      <a mat-button color="primary" [routerLink]="['/recipe/edit', recipe.rId]">EDIT</a>
+      <button mat-button (click)="onDelete(recipe.rId)" color="warn">DELETE</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<br/>
+<p class = 'info-text mat-body-1' *ngIf="recipeList.length == 0">No recipes added yet!</p>

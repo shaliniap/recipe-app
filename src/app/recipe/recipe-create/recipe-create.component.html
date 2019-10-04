@@ -1,0 +1,43 @@
+<form [formGroup]="recipeName" (submit)="onAddRecipe()">
+    <mat-form-field>
+        <input matInput type="text" formControlName="name" placeholder="Enter Recipe Name">
+        <mat-error *ngIf="recipeName.get('name').invalid">Please enter recipe name.</mat-error>
+    </mat-form-field>
+    <br/>
+</form>
+<button (click)="onAddRecipe()" [disabled]="recipeName.invalid || show" mat-raised-button color="accent">Submit</button>
+<br/>
+<p *ngIf="show && (mode ==='editStep')"><strong>Edit Step</strong></p>
+<p *ngIf="show && (mode !=='editStep')"><strong>Add Step</strong></p>
+<form [formGroup]="recipeForm" *ngIf="show" (submit)="onAddStep()">
+    <mat-form-field>
+        <input matInput type="text" formControlName="title" name="title" placeholder="Step Title">
+        <mat-error *ngIf="recipeForm.get('title').invalid">Please enter a recipe step title.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <textarea matInput rows='6' formControlName="description" name="content" placeholder="Step Description"></textarea>
+        <mat-error *ngIf="recipeForm.get('description').invalid">Please enter step description</mat-error>
+      </mat-form-field>
+    <div>
+      <button mat-stroked-button style="background-color: lightgrey" type="button" (click)="(filepicker.click())">Add Image</button>
+      <input type="file" #filepicker (change)="onImagePicked($event)">
+    </div>
+    <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && recipeForm.get('image').valid">
+      <img [src]="imagePreview" [alt]="recipeForm.value.title">
+    </div>
+    <mat-error *ngIf="recipeForm.get('image').invalid">*Please select image</mat-error>
+    <mat-form-field>
+      <input matInput type="url" formControlName="videoLink" name="link" placeholder="Paste video link">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="url" formControlName="timer" name="time" placeholder="Add time in minutes(Ex. 1, 2.5)">
+    </mat-form-field>
+    <mat-error *ngIf="recipeForm.get('timer').invalid">Please enter valid time</mat-error>
+    <br/>
+    <button *ngIf="show"
+      mat-raised-button
+      color = "accent"
+     type="submit">Submit</button>
+</form>
+<br/>
+<a *ngIf="show" href="/create" >Click to add new recipe</a>
