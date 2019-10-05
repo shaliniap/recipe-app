@@ -8,7 +8,7 @@ const recipeRoutes = require("./router");
 
 app.use(bodyParser.json());
 app.use('/images', express.static(path.join('backend/images')));
-//app.use('/images', express.static(path.join('images')));  // changed path for images storage for S3
+//app.use('/images', express.static(path.join('images')));  // changed path for images storage in AWS
 
 // connecting to database
 mongoose.connect('mongodb+srv://sap:ZydtSIvTeXgChSGT@cluster0-93xan.mongodb.net/node-angular?retryWrites=true&w=majority',{useCreateIndex: true, useNewUrlParser: true})

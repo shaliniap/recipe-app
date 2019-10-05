@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
       error = null;
     }
     cb(error, "backend/images");
-    //cb(error, "images");  // changed path for images storage for S3
+    //cb(error, "images");  // changed path for images storage in AWS
   },
   filename: (req, file, cb) => {
     const name = file.originalname.toLowerCase().split(' ').join('-');
