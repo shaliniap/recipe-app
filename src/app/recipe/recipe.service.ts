@@ -35,8 +35,12 @@ export class RecipeService {
     recipeData.append('description', description);
     recipeData.append('image', image, title);
     recipeData.append('videoLink', videoLink);
-    recipeData.append('timer', timer.toString());
-    return this.http.post<{message: string, post: Step}>(
+
+    const t = timer ? timer.toString() : '';
+    recipeData.append('timer', t);
+
+    console.log(recipeData);
+    return this.http.post<{message: string, step: Step}>(
       'http://localhost:3000/api/recipes/step', recipeData
       )
       .pipe(map(res => {
