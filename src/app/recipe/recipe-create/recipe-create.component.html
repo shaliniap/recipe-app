@@ -12,11 +12,15 @@
 <form [formGroup]="recipeForm" *ngIf="show" (submit)="onAddStep()">
     <mat-form-field>
         <input matInput type="text" formControlName="title" name="title" placeholder="Step Title">
-        <mat-error *ngIf="recipeForm.get('title').invalid">Please enter a recipe step title.</mat-error>
+        <mat-error *ngIf="recipeForm.get('title').invalid && (recipeForm.get('title').dirty || recipeForm.get('title').touched)">
+          Please enter a recipe step title.
+        </mat-error>
     </mat-form-field>
     <mat-form-field>
         <textarea matInput rows='6' formControlName="description" name="content" placeholder="Step Description"></textarea>
-        <mat-error *ngIf="recipeForm.get('description').invalid">Please enter step description</mat-error>
+        <mat-error *ngIf="recipeForm.get('description').invalid && (recipeForm.get('description').dirty || recipeForm.get('description').touched)">
+          Please enter step description.
+        </mat-error>
       </mat-form-field>
     <div>
       <button mat-stroked-button style="background-color: lightgrey" type="button" (click)="(filepicker.click())">Add Image</button>
