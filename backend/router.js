@@ -151,13 +151,19 @@ router.put('/updateRecipe/:id', (req, res, next) => {
   });
 });
 
-router.put('/updateStep/:id', (req, res, next) => {
+router.put('/updateStep/:id',extractFile, (req, res, next) => {
+  console.log(req.body);
+  let imagePath = req.body.imagePath;
+  if(req.file){
+    const url = req.protocol + '://' + req.get('host');
+    imagePath = url + '/images/' + req.file.filename;
+  }
   const step = new Step({
     _id: req.body.stepId,
     recipeId: req.body.recipeId,
     title: req.body.title,
     description: req.body.description,
-    imagePath: req.body.imagePath,
+    imagePath: imagePath,
     videoLink: req.body.videoLink,
     timer: req.body.timer
   });

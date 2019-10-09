@@ -108,12 +108,27 @@ export class RecipeService {
   }
 
   // change the step form fields
-  updateStep(stepId: string, recipeId: string, title: string, description: string, imagePath: string, videoLink: string, timer: number) {
+  updateStep(stepId: string, recipeId: string, title: string, description: string, image: File | string, videoLink: string, timer: number) {
+    console.log("Update Step");
     let stepData: Step | FormData;
-    stepData = { stepId, recipeId, title, description, imagePath, videoLink, timer};
+    if (typeof(image) === 'object') {
+      stepData = new FormData();
+      stepData.append('stepId', stepId);
+      stepData.append('recipeId', recipeId);
+      stepData.append('title', title);
+      stepData.append('description', description);
+      stepData.append('image', image, title);
+      stepData.append('videoLink', videoLink);
+
+      const t = timer ? timer.toString() : '';
+      stepData.append('timer', t);
+    } else {
+      console.log(timer);
+      stepData = { stepId, recipeId, title, description, imagePath: image, videoLink, timer};
+    }
     this.http.put('http://localhost:3000/api/recipes/updateStep/' + stepId, stepData)
               .subscribe(res => {
-               this.router.navigate(['/']);
+                this.router.navigate(['/']);
               });
    }
 
