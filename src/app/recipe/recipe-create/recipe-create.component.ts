@@ -55,7 +55,6 @@ export class RecipeCreateComponent implements OnInit {
         });
       } else if (paramMap.has('stepId')) {
         this.mode = 'editStep';
-        console.log('editStep');
         this.show = true;
         this.stepId = paramMap.get('stepId');
         console.log(this.stepId);
@@ -126,7 +125,7 @@ export class RecipeCreateComponent implements OnInit {
     if (this.mode === 'editStep') {
       console.log(this.step);
       this.recipeService.updateStep(this.stepId, this.step.recipeId, this.recipeForm.value.title, this.recipeForm.value.description,
-                                    this.recipeForm.value.imagePath, this.recipeForm.value.videoLink, this.recipeForm.value.timer);
+                                    this.recipeForm.value.image, this.recipeForm.value.videoLink, this.recipeForm.value.timer);
     } else {
       this.recipeService.addRecipeStep(this.recipeId, this.recipeForm.value.title, this.recipeForm.value.description,
                    this.recipeForm.value.image, this.recipeForm.value.videoLink, this.recipeForm.value.timer)
@@ -137,6 +136,7 @@ export class RecipeCreateComponent implements OnInit {
                   });
 
     }
+
     this.recipeForm.reset();
   }
 
